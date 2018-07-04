@@ -1,6 +1,6 @@
-### Typecho-TleVoice同乐语音插件
+### TleVoiceForTypecho同乐语音插件
 
----Typecho-TleVoice同乐语音插件，使用了百度语音api实现，可帮助网站个性化文章阅读，语音不占用服务器空间，可随时删除，无需数据库配合。
+TleVoiceForTypecho同乐语音插件，使用了百度语音api实现，可帮助网站个性化文章阅读，语音不占用服务器空间，可随时删除，无需数据库配合。
 
 程序有可能会遇到bug不改版本号直接修改代码的时候，所以扫描以下二维码关注公众号“同乐儿”，可直接与作者二呆产生联系，不再为bug烦恼，随时随地解决问题。
 
@@ -19,7 +19,7 @@
 作者：二呆<br />
 微信：Diamond0422<br />
 网站：http://www.tongleer.com/<br />
-Github：
+Github：https://github.com/muzishanshi/TleVoiceForTypecho
 
 #### 更新记录：
 2018-07-04 第一版本问世
