@@ -7,7 +7,7 @@ TleVoiceForTypecho同乐语音插件，使用了百度语音api实现，可帮�
 <img src="http://me.tongleer.com/content/uploadfile/201706/008b1497454448.png">
 
 #### 使用方法：
-第一步：下载本插件，放在 `usr/plugins/` 目录中（插件文件夹名必须为TleVoice）；<br />
+第一步：下载本插件，放在 `usr/plugins/` 目录中；（插件文件夹名必须为TleVoice）<br />
 第二步：激活插件；<br />
 第三步：填写配置；<br />
 第四步：完成。
