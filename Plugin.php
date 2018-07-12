@@ -21,6 +21,12 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 
     // 插件配置面板
     public static function config(Typecho_Widget_Helper_Form $form){
+		//版本检查
+		$version=file_get_contents('http://api.tongleer.com/interface/TleVoice.php?action=update&version=1');
+		$div=new Typecho_Widget_Helper_Layout();
+		$div->html('版本检查：'.$version);
+		$div->render();
+		
 		$db = Typecho_Db::get();
 		$options = Typecho_Widget::widget('Widget_Options');
 		$plug_url = $options->pluginUrl;
