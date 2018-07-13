@@ -189,7 +189,7 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 								<div class="am-modal-hd"><img src="'.$values[0].'" width="200" /></div>
 								<div class="am-modal-bd" style="height:150px;">
 								  '.$values[3].'说：'.$values[4].'<br />
-								  <audio src="'.$plug_url.'/TleVoice/aip-speech/upload/voice/'.$mp3.'" controls>您的浏览器不支持 audio 标签。</audio>
+								  <audio src="'.$plug_url.'/TleVoice/aip-speech/upload/voice/'.$mp3.'" controls style="width:100%;">您的浏览器不支持 audio 标签。</audio>
 								</div>
 								<div class="am-modal-footer">
 								  <span class="am-modal-btn">继续</span>
