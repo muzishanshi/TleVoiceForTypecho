@@ -19,7 +19,7 @@
 作者：二呆<br />
 微信：Diamond0422<br />
 网站：http://www.tongleer.com/<br />
-Github：
+Github：https://github.com/muzishanshi/TleVoiceForTypecho
 
 #### 更新记录：
 2018-07-13 优化弹出图片大小和详细使用说明<br />
