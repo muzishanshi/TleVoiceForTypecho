@@ -35,17 +35,17 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		$secret_key = @isset($_POST['secret_key']) ? addslashes(trim($_POST['secret_key'])) : '';
 		if($app_id!=''&&$api_key!=''&&$secret_key!=''){
 			file_put_contents(dirname(__FILE__).'/config.php','<?php die; ?>'.serialize(array(
-				'app_id'=>$app_id,
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key
+				'app_id'=>$app_id,//10519990
+				'api_key'=>$api_key,//1DsFzRqqj4jtWXBYNLfGb0GWVeXthUv5
+				'secret_key'=>$secret_key//dhDCcPyDCa6vgi5028WKT4x4SrUzD8YY
 			)));
 		}
 		
 		$div = new Typecho_Widget_Helper_Layout();
 		$divstr1='
-			<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css"/>
-			<script src="http://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-			<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/css/amazeui.min.css"/>
+			<script src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
 			<h6>使用方法</h6>
 			<span>
 				第一步：写文章时以下面这种格式添加一个名为gif的字段；
@@ -160,9 +160,9 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
      */
     public static function output(){
 		$out='
-			<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css"/>
-			<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-			<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/css/amazeui.min.css"/>
+			<script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
 		';
 		$db = Typecho_Db::get();
 		$option=self::getConfig();
