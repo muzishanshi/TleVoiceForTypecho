@@ -11,6 +11,9 @@
 class TleVoice_Plugin implements Typecho_Plugin_Interface{
     // 激活插件
     public static function activate(){
+		if(!is_dir(dirname(__FILE__)."/aip-speech/upload/voice")){
+			mkdir (dirname(__FILE__)."/aip-speech/upload/voice", 0777, true );
+		}
         return _t('插件已经激活，需先配置同乐语音的信息！');
     }
 
