@@ -38,9 +38,9 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		$secret_key = @isset($_POST['secret_key']) ? addslashes(trim($_POST['secret_key'])) : '';
 		if($app_id!=''&&$api_key!=''&&$secret_key!=''){
 			file_put_contents(dirname(__FILE__).'/config.php','<?php die; ?>'.serialize(array(
-				'app_id'=>$app_id,//10519990
-				'api_key'=>$api_key,//1DsFzRqqj4jtWXBYNLfGb0GWVeXthUv5
-				'secret_key'=>$secret_key//dhDCcPyDCa6vgi5028WKT4x4SrUzD8YY
+				'app_id'=>$app_id,
+				'api_key'=>$api_key,
+				'secret_key'=>$secret_key
 			)));
 		}
 		
