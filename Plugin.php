@@ -38,9 +38,9 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		$secret_key = @isset($_POST['secret_key']) ? addslashes(trim($_POST['secret_key'])) : '';
 		if($app_id!=''&&$api_key!=''&&$secret_key!=''){
 			file_put_contents(dirname(__FILE__).'/config.php','<?php die; ?>'.serialize(array(
-				'app_id'=>$app_id,
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key
+				'app_id'=>$app_id,//10519990
+				'api_key'=>$api_key,//1DsFzRqqj4jtWXBYNLfGb0GWVeXthUv5
+				'secret_key'=>$secret_key//dhDCcPyDCa6vgi5028WKT4x4SrUzD8YY
 			)));
 		}
 		
@@ -58,7 +58,7 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 			<span><p>第二步：在本页文章列表中点击生成语音；</p></span>
 			<span>
 				第三步：将以下代码放到主题目录下post.php中任意位置即可。
-				<pre>&lt;?=TleVoice_Plugin::output();?></pre>
+				<pre>&lt;?=TleVoice_Plugin::output($this);?></pre>
 			</span>
 			<div class="am-scrollable-horizontal">
 			  <table class="am-table am-table-bordered am-table-striped am-text-nowrap">
@@ -133,7 +133,7 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		$isEnable = new Typecho_Widget_Helper_Form_Element_Radio('isEnable', array(
             'y'=>_t('启用'),
             'n'=>_t('禁用')
-        ), 'y', _t('是否启用同乐语音'), _t("启用后可在对应的文章浏览页面看见个行特效。"));
+        ), 'n', _t('是否启用同乐语音'), _t("启用后可在对应的文章浏览页面看见个行特效。"));
         $form->addInput($isEnable->addRule('enum', _t(''), array('y', 'n')));
 		
 		$app_id = new Typecho_Widget_Helper_Form_Element_Text('app_id', NULL, '', _t('appid'), _t('百度语音appid'));
@@ -161,58 +161,26 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
      * @access public
      * @return void
      */
-    public static function output(){
-		$out='
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/css/amazeui.min.css"/>
-			<script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
-		';
-		$db = Typecho_Db::get();
-		$option=self::getConfig();
-		$options = Typecho_Widget::widget('Widget_Options');
-		$plug_url = $options->pluginUrl;
-		$archive = Typecho_Widget::widget('Widget_Archive');
-        $cid = $archive->cid;
-		if($option->isEnable=='y'){
-			$query= $db->select()->from('table.fields')->where('cid = ?', $cid)->where('name = ?', 'gif'); 
-			$row = $db->fetchRow($query);
-			if($row){
-				$str_value=explode('|',$row['str_value']);
-				if(count($str_value)>0){
-					$index=0;
-					for($i=count($str_value)-1;$i>=0;$i--){
-						$values=explode('`',$str_value[$i]);
-						$filename=dirname(__FILE__)."/aip-speech/upload/voice/voice_".$cid."_".$values[2]."_*.mp3";
-						$filename=iconv("utf-8", "gbk", $filename);
-						$attr = glob($filename);
-						$mp3=basename(iconv("gbk", "utf-8", $attr[0]));
-						$out.='
-							<div class="am-modal am-modal-alert my-alert" tabindex="-1" id="my-alert'.$index.'">
-							  <div class="am-modal-dialog">
-								<div class="am-modal-hd"><img src="'.$values[0].'" width="200" /></div>
-								<div class="am-modal-bd" style="height:150px;">
-								  '.$values[3].'说：'.$values[4].'<br />
-								  <audio src="'.$plug_url.'/TleVoice/aip-speech/upload/voice/'.$mp3.'" controls style="width:100%;">您的浏览器不支持 audio 标签。</audio>
-								</div>
-								<div class="am-modal-footer">
-								  <span class="am-modal-btn">继续</span>
-								</div>
-							  </div>
-							</div>
-						';
-						$index++;
-					}
-					$out.='
-						<script>
-							$(".my-alert").each(function(){
-								var id=$(this).attr("id");
-								$("#"+id).modal();
-							});
-						</script>
-					';
-					echo $out;
+    public static function output($obj){
+		echo '
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>
+			<script>
+			var tlevoicelayer = layer.open({
+				type: 2
+				,title: "同乐语音"
+				,id: "tlevoice"
+				,area: ["60%", "60%"]
+				,shade: 0
+				,maxmin: true
+				,offset: "auto"
+				,content: "'.Helper::options()->pluginUrl.'/TleVoice/show.php?cid='.$obj->cid.'"
+				,zIndex: layer.zIndex
+				,success: function(layero){
+				  layer.setTop(layero);
 				}
-			}
-		}
+			});
+			layer.full(tlevoicelayer);
+			</script>
+		';
 	}
 }
