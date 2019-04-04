@@ -14,8 +14,10 @@ if($action=='addVoice'){
 	if($row){
 		$str_value=explode('|',$row['str_value']);
 		if(count($str_value)>0){
+			$words="";
 			foreach($str_value as $value){
 				$values=explode('`',$value);
+				$words.=$values[3].'说'.$values[4].'。';
 				$result = $client->synthesis($values[3].'说'.$values[4], 'zh', 1, array(
 					'per' => $values[1],
 				));
@@ -25,6 +27,15 @@ if($action=='addVoice'){
 					$filename = iconv("utf-8", "gbk", $filename);
 					file_put_contents('aip-speech/upload/voice/'.$filename, $result);
 				}
+			}
+			$result = $client->synthesis($words, 'zh', 1, array(
+				'per' => 4,
+			));
+			// 识别正确返回语音二进制 错误则返回json 参照下面错误码
+			if(!is_array($result)){
+				$filename='voice_'.$cid.'_all_'.time().'.mp3';
+				$filename = iconv("utf-8", "gbk", $filename);
+				file_put_contents('aip-speech/upload/voice/'.$filename, $result);
 			}
 		}
 	}
