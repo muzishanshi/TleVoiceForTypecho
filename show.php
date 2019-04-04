@@ -31,12 +31,12 @@ if($option->isEnable=='y'){
 				<?php
 				$queryMp4= $db->select()->from('table.fields')->where('cid = ?', $cid)->where('name = ?', 'gifmp4'); 
 				$rowMp4 = $db->fetchRow($queryMp4);
-				$mp4_value=explode('`',$rowMp4['str_value']);
 				if($rowMp4){
+					$mp4_value=explode('`',$rowMp4['str_value']);
 					$allvoice=dirname(__FILE__)."/aip-speech/upload/voice/voice_".$cid."_all_*.mp3";
 					$allvoice=iconv("utf-8", "gbk", $allvoice);
 					$allattr = glob($allvoice);
-					$allmp3=basename(iconv("gbk", "utf-8", $allattr[0]));
+					$allmp3=basename(iconv("gbk", "utf-8", @$allattr[0]));
 					?>
 					<div>
 						<video style="float:left;" src="<?=$mp4_value[0];?>" <?php if($mp4_value[1]=="true"){?>autoplay <?php }?> controls="controls" width="80%" height="100%">您的浏览器不支持 video 标签。</video>
@@ -48,7 +48,7 @@ if($option->isEnable=='y'){
 									$filename=dirname(__FILE__)."/aip-speech/upload/voice/voice_".$cid."_".$values[2]."_*.mp3";
 									$filename=iconv("utf-8", "gbk", $filename);
 									$attr = glob($filename);
-									$mp3=basename(iconv("gbk", "utf-8", $attr[0]));
+									$mp3=basename(iconv("gbk", "utf-8", @$attr[0]));
 									$index++;
 									?>
 									<li class="layui-timeline-item">
@@ -75,7 +75,7 @@ if($option->isEnable=='y'){
 						$filename=dirname(__FILE__)."/aip-speech/upload/voice/voice_".$cid."_".$values[2]."_*.mp3";
 						$filename=iconv("utf-8", "gbk", $filename);
 						$attr = glob($filename);
-						$mp3=basename(iconv("gbk", "utf-8", $attr[0]));
+						$mp3=basename(iconv("gbk", "utf-8", @$attr[0]));
 						$index++;
 						?>
 						<div style="background:url(<?=$values[0];?>);background-size:100% 100%;">

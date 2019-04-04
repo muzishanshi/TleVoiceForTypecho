@@ -14,6 +14,7 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		if(!is_dir(dirname(__FILE__)."/aip-speech/upload/voice")){
 			mkdir (dirname(__FILE__)."/aip-speech/upload/voice", 0777, true );
 		}
+		Typecho_Plugin::factory('Widget_Archive')->footer = array('TleVoice_Plugin', 'footer');
         return _t('插件已经激活，需先配置同乐语音的信息！');
     }
 
@@ -54,8 +55,9 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 				});
 			</script>
 			<h6>使用方法</h6>
+			<span><p>第一步：配置插件各项参数；</p></span>
 			<span>
-				第一步：按格式为文章增加自定义字段；
+				第二步：按格式为文章增加自定义字段；
 				<pre>
 <h6>添加图片语音时添加一个名为gif的字段</h6>
 <font color="blue">第一人gif图片地址`{number}`第一人英文名/序列(不可重复)`第一人中文名`第一人说话内容|第二人gif图片地址`{number}`第二人英文名/序列(不可重复)`第二人中文名`第二人说话内容</font>……以此类推
@@ -69,9 +71,9 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 注、视频地址和{isAutoPlay}之间用“<font color="red">`</font>”分割。
 				</pre>
 			</span>
-			<span><p>第二步：在本页文章列表中点击生成语音；</p></span>
+			<span><p>第三步：在本页文章列表中点击生成语音；</p></span>
 			<span>
-				第三步：将以下代码放到主题目录下post.php中任意位置即可。
+				第四步：将以下代码放到主题目录下post.php中任意位置，如果网站启用了pjax，一定要放在pjax容器之内。
 				<pre>&lt;?=TleVoice_Plugin::output($this);?></pre>
 			</span>
 			<div class="am-scrollable-horizontal">
@@ -169,6 +171,10 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
         return Typecho_Widget::widget('Widget_Options')->plugin('TleVoice');
     }
 	
+	public static function footer(){
+        echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>';
+    }
+	
 	/**
      * 输出
      *
@@ -176,25 +182,31 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
      * @return void
      */
     public static function output($obj){
-		echo '
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>
-			<script>
-			var tlevoicelayer = layer.open({
-				type: 2
-				,title: "同乐语音"
-				,id: "tlevoice"
-				,area: ["60%", "60%"]
-				,shade: 0
-				,maxmin: true
-				,offset: "auto"
-				,content: "'.Helper::options()->pluginUrl.'/TleVoice/show.php?cid='.$obj->cid.'"
-				,zIndex: layer.zIndex
-				,success: function(layero){
-				  layer.setTop(layero);
-				}
-			});
-			layer.full(tlevoicelayer);
-			</script>
-		';
+		$db = Typecho_Db::get();
+		$queryGif= $db->select()->from('table.fields')->where('cid = ?', $obj->cid)->where('name = ?', 'gif'); 
+		$rowGif = $db->fetchRow($queryGif);
+		if($rowGif){
+			echo '
+				<script>
+				$(function(){
+					var tlevoicelayer = layer.open({
+						type: 2
+						,title: "同乐语音"
+						,id: "tlevoice"
+						,area: ["60%", "60%"]
+						,shade: 0
+						,maxmin: true
+						,offset: "auto"
+						,content: "'.Helper::options()->pluginUrl.'/TleVoice/show.php?cid='.$obj->cid.'"
+						,zIndex: layer.zIndex
+						,success: function(layero){
+						  layer.setTop(layero);
+						}
+					});
+					layer.full(tlevoicelayer);
+				});
+				</script>
+			';
+		}
 	}
 }
