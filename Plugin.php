@@ -1,13 +1,13 @@
 <?php
 /**
- * TleVoice同乐语音，使用了百度语音api实现，可帮助网站个性化文章阅读
+ * TleVoice同乐语音，使用了百度语音api实现，可帮助网站个性化文章阅读，包含图片语音和视频语音功能。
  * @package TleVoice For Typecho
  * @author 二呆
- * @version 1.0.2
+ * @version 1.0.3
  * @link http://www.tongleer.com/
- * @date 2018-07-13
+ * @date 2019-04-04
  */
-
+define('TLEVOICE_VERSION', '3');
 class TleVoice_Plugin implements Typecho_Plugin_Interface{
     // 激活插件
     public static function activate(){
@@ -25,9 +25,8 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
     // 插件配置面板
     public static function config(Typecho_Widget_Helper_Form $form){
 		//版本检查
-		$version=file_get_contents('http://api.tongleer.com/interface/TleVoice.php?action=update&version=2');
 		$div=new Typecho_Widget_Helper_Layout();
-		$div->html('版本检查：'.$version);
+		$div->html('版本检查：<span id="versionCode"></span>');
 		$div->render();
 		
 		$db = Typecho_Db::get();
@@ -49,10 +48,25 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/css/amazeui.min.css"/>
 			<script src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.2/js/amazeui.min.js" type="text/javascript"></script>
+			<script>
+				$.post("'.$plug_url.'/TleVoice/ajax_tovoice.php",{action:"update",version:'.TLEVOICE_VERSION.'},function(data){
+					$("#versionCode").html(data);
+				});
+			</script>
 			<h6>使用方法</h6>
 			<span>
-				第一步：写文章时以下面这种格式添加一个名为gif的字段；
-				<pre><font color="blue">第一人gif图片地址`{number}`第一人英文名/序列(不可重复)`第一人中文名`第一人说话内容|第二人gif图片地址`{number}`第二人英文名/序列(不可重复)`第二人中文名`第二人说话内容</font>……以此类推<br />1、每个对话之间用“<font color="red">|</font>”分割，对话中每个项目用“<font color="red">`</font>”分割。<br />2、{number}位置填写0、1、3、4，0代表普通女声、1代表普通男声、3代表情感男声、4代表情感女声。<br />3、注意同一文章中每个英文名不能相同。
+				第一步：按格式为文章增加自定义字段；
+				<pre>
+<h6>添加图片语音时添加一个名为gif的字段</h6>
+<font color="blue">第一人gif图片地址`{number}`第一人英文名/序列(不可重复)`第一人中文名`第一人说话内容|第二人gif图片地址`{number}`第二人英文名/序列(不可重复)`第二人中文名`第二人说话内容</font>……以此类推
+1、每个对话之间用“<font color="red">|</font>”分割，对话中每个项目用“<font color="red">`</font>”分割。
+2、{number}位置填写0、1、3、4，0代表普通女声、1代表普通男声、3代表情感男声、4代表情感女声。
+3、注意同一文章中每个英文名不能相同。
+				</pre>
+				<pre>
+<h6>添加视频语音时添加一个名为gifmp4的字段</h6>
+<font color="blue">视频地址`{isAutoPlay}</font>
+注、视频地址和{isAutoPlay}之间用“<font color="red">`</font>”分割。
 				</pre>
 			</span>
 			<span><p>第二步：在本页文章列表中点击生成语音；</p></span>

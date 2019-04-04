@@ -45,5 +45,10 @@ if($action=='addVoice'){
 	foreach($attr as $mp3){
 		@unlink($mp3);
 	}
+}else if($action=='update'){
+	//版本检测
+	$version = isset($_POST['version']) ? addslashes($_POST['version']) : '';
+	$version=file_get_contents('http://api.tongleer.com/interface/TleVoice.php?action=update&version='.$version);
+	echo $version;
 }
 ?>
