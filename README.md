@@ -30,7 +30,7 @@ Github：https://github.com/muzishanshi/TleVoiceForTypecho
 #### 更新记录：
 2019-04-04
 
-	优化弹出界面样式、新增视频语音娱乐。
+	优化弹出界面样式、新增视频语音娱乐和弹幕操作。
 
 2018-07-13
 
