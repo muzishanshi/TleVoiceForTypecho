@@ -39,8 +39,8 @@ if($option->isEnable=='y'){
 					$allmp3=basename(iconv("gbk", "utf-8", @$allattr[0]));
 					?>
 					<div>
-						<video style="float:left;" src="<?=$mp4_value[0];?>" <?php if($mp4_value[1]=="true"){?>autoplay <?php }?> controls="controls" width="80%" height="100%">您的浏览器不支持 video 标签。</video>
-						<div style="width:20%;float:left;height:550px;">
+						<video style="float:left;" src="<?=$mp4_value[0];?>" <?php if($mp4_value[1]=="true"){?>autoplay <?php }?> controls="controls" width="<?=$option->screenmode=="horizontal"?"80%":"20%";?>" height="100%">您的浏览器不支持 video 标签。</video>
+						<div style="width:<?=$option->screenmode=="horizontal"?"20%":"80%";?>;float:left;height:550px;">
 							<ul class="layui-timeline" style="overflow:scroll;height:500px;">
 								<?php
 								for($i=count($str_value)-1;$i>=0;$i--){

@@ -146,6 +146,12 @@ class TleVoice_Plugin implements Typecho_Plugin_Interface{
 		$div->html($divstr1.$divstr2.$divstr3);
 		$div->render();
 		
+		$screenmode = new Typecho_Widget_Helper_Form_Element_Radio('screenmode', array(
+            'horizontal'=>_t('横屏'),
+            'vertical'=>_t('竖屏')
+        ), 'horizontal', _t('视频屏幕展现方式'), _t("针对视频种类选择展现方式。"));
+        $form->addInput($screenmode->addRule('enum', _t(''), array('horizontal', 'vertical')));
+		
 		$isEnable = new Typecho_Widget_Helper_Form_Element_Radio('isEnable', array(
             'y'=>_t('启用'),
             'n'=>_t('禁用')

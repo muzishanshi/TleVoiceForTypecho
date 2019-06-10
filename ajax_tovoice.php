@@ -15,7 +15,9 @@ if($action=='addVoice'){
 		$str_value=explode('|',$row['str_value']);
 		if(count($str_value)>0){
 			$words="";
+			$voicetype=0;
 			foreach($str_value as $value){
+				$voicetype=$values[1];
 				$values=explode('`',$value);
 				$words.=$values[3].'说'.$values[4].'。';
 				$result = $client->synthesis($values[3].'说'.$values[4], 'zh', 1, array(
@@ -29,7 +31,7 @@ if($action=='addVoice'){
 				}
 			}
 			$result = $client->synthesis($words, 'zh', 1, array(
-				'per' => 4,
+				'per' => $voicetype,
 			));
 			// 识别正确返回语音二进制 错误则返回json 参照下面错误码
 			if(!is_array($result)){
