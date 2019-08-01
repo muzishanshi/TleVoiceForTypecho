@@ -1,4 +1,4 @@
-### TleVoiceForTypecho同乐语音插件
+### TleVoiceForTypecho同乐语音插件（暂时不对外公开）
 
 ---TleVoiceForTypecho同乐语音插件，使用了百度语音api实现，可帮助网站个性化文章阅读，语音不占用服务器空间，可随时删除，无需数据库配合，纯属娱乐之用，包含图片语音和视频语音功能。
 
